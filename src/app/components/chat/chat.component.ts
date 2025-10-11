@@ -53,7 +53,7 @@ import { MessageComponent, ChatMessage } from '../message/message.component';
   styles: [`
     .chat-container {
       width: 100%;
-      max-width: 600px;  /* Fixed maximum width */
+      max-width: 800px;  /* Fixed maximum width */
       min-width: 400px;  /* Minimum width to prevent shrinking */
       border: 1px solid #E5E5EA;
       border-radius: 12px;
