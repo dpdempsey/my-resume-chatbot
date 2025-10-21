@@ -8,6 +8,13 @@
   />
   
   <main>
+    <!-- API Message from Tutorial (if available) -->
+    @if (apiMessage()) {
+      <div class="api-message">
+        <p><strong>API Response:</strong> {{apiMessage()}}</p>
+      </div>
+    }
+    
     <!-- Chat Component Demo -->
     <div class="chat-wrapper">
       <app-chat />
@@ -33,6 +40,15 @@
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   margin-top: -8px; /* Slight overlap to connect with header */
+}
+
+.api-message {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-family: monospace;
 }
 </style>
 
