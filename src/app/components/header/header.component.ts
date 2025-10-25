@@ -29,6 +29,7 @@ import { Component, input } from '@angular/core';
       box-shadow: 0 2px 20px rgba(0, 122, 255, 0.2);
       margin-bottom: 0;
       position: relative;
+      z-index: 10;
     }
 
     .profile-section {
@@ -107,7 +108,6 @@ import { Component, input } from '@angular/core';
 export class HeaderComponent {
   name = input<string>('');
   title = input<string>('');
-  //tagline = input<string>('The best software engineer you\'ve ever seen!');
 
   getInitials(): string {
     const nameParts = this.name().split(' ');

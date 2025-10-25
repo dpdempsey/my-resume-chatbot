@@ -1,11 +1,6 @@
 import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-// TODO: Create the ChatMessage interface
-// HINTS: 
-// - Remember your TypeScript playground? Use similar structure
-// - Properties needed: id (string), content (string), type, timestamp (Date)
-// - type should be: 'user' | 'bot' | 'system'
 export interface ChatMessage {
   id: string;
   content: string;
@@ -192,10 +187,6 @@ type MessageType = 'user' | 'bot' | 'system';
   `]
 })
 export class MessageComponent {
-  // TODO: Create input signal for message data
-  // HINTS:
-  // - Use input.required<ChatMessage>() since every message needs data
-  // - This makes the message prop required when using the component
   
   message = input.required<ChatMessage>();
 }

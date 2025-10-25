@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent, ChatMessage } from '../message/message.component';
 import { ResumeAgentService } from '../../services/resume-agent.service';
@@ -8,7 +8,7 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
   imports: [MessageComponent, FormsModule],
   template: `
     <div class="chat-container">
-      <div class="messages-container">
+      <div class="messages-container" #messagesContainer>
         @if (messages().length === 0) {
           <div class="welcome-message">
             <h3>👋 Welcome to my Resume Chatbot!</h3>
@@ -57,13 +57,15 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
       max-width: 800px;  /* Fixed maximum width */
       min-width: 400px;  /* Minimum width to prevent shrinking */
       border: 1px solid #E5E5EA;
-      border-radius: 12px;
+      border-radius: 0 0 12px 12px;  /* Only round bottom corners since header has top corners */
       height: 500px;  /* Slightly taller for better proportions */
       display: flex;
       flex-direction: column;
       background: #FFFFFF;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       margin: 0 auto;  /* Center the chat container */
+      position: relative;
+      z-index: 1;  /* Lower than header */
     }
 
     .messages-container {
@@ -72,6 +74,8 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
       overflow-y: auto;
       background: #F2F2F7;
       min-height: 0;
+      position: relative;
+      scroll-behavior: smooth;
     }
 
     .input-container {
@@ -189,12 +193,31 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
     }
   `]
 })
-export class ChatComponent {
+export class ChatComponent implements AfterViewChecked {
+  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  
   messages = signal<ChatMessage[]>([]);
   currentMessage = '';
   isTyping = signal(false);
+  private shouldScrollToBottom = false;
 
   constructor(private resumeAgentService: ResumeAgentService) {}
+
+  ngAfterViewChecked() {
+    if (this.shouldScrollToBottom) {
+      this.scrollToBottom();
+      this.shouldScrollToBottom = false;
+    }
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.messagesContainer.nativeElement.scrollTop = 
+        this.messagesContainer.nativeElement.scrollHeight;
+    } catch(err) {
+      console.error('Error scrolling to bottom:', err);
+    }
+  }
 
   async sendMessage() {
     if (!this.currentMessage.trim()) {
@@ -212,6 +235,8 @@ export class ChatComponent {
     const userQuestion = this.currentMessage.trim();
     this.currentMessage = '';
     
+    this.shouldScrollToBottom = true;
+    
     this.isTyping.set(true);
     
     try {
@@ -226,6 +251,8 @@ export class ChatComponent {
       
       this.messages.update(currentMessages => [...currentMessages, botMessage]);
       
+      this.shouldScrollToBottom = true;
+      
     } catch (error) {
       console.error('Error getting AI response:', error);
       
@@ -237,6 +264,8 @@ export class ChatComponent {
       };
       
       this.messages.update(currentMessages => [...currentMessages, errorMessage]);
+      
+      this.shouldScrollToBottom = true;
     } finally {
       this.isTyping.set(false);
     }

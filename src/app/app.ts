@@ -7,17 +7,10 @@ import { ChatComponent } from './components/chat/chat.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, MessageComponent, ChatComponent],
+  imports: [RouterOutlet, HeaderComponent, ChatComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('my-resume-chatbot');
-  protected readonly apiMessage = signal('');
-
-  constructor(private http: HttpClient) {
-    // Test API call like in the tutorial
-    this.http.get('/api/AgentService')
-      .subscribe((resp: any) => this.apiMessage.set(resp.text));
-  }
 }
