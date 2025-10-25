@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent, ChatMessage } from '../message/message.component';
+import { ResumeAgentService } from '../../services/resume-agent.service';
 
 @Component({
   selector: 'app-chat',
-  imports: [MessageComponent, FormsModule], // FormsModule for two-way binding
+  imports: [MessageComponent, FormsModule],
   template: `
     <div class="chat-container">
       <div class="messages-container">
@@ -189,80 +190,61 @@ import { MessageComponent, ChatMessage } from '../message/message.component';
   `]
 })
 export class ChatComponent {
-  // TODO: Set up component state with signals
-  // HINTS:
-  // - messages array signal: signal<ChatMessage[]>([])
-  // - currentMessage string for input: ''
-  // - isTyping signal for showing typing indicator: signal(false)
-  
   messages = signal<ChatMessage[]>([]);
   currentMessage = '';
   isTyping = signal(false);
 
-  sendMessage() {
+  constructor(private resumeAgentService: ResumeAgentService) {}
+
+  async sendMessage() {
     if (!this.currentMessage.trim()) {
-      return; // Don't send empty messages
+      return; 
     }
+    
     const userMessage: ChatMessage = {
-      id: Date.now().toString(), // Simple unique ID
+      id: Date.now().toString(),
       content: this.currentMessage.trim(),
       type: 'user',
       timestamp: new Date()
     };
 
     this.messages.update(currentMessages => [...currentMessages, userMessage]);
+    const userQuestion = this.currentMessage.trim();
     this.currentMessage = '';
-    this.simulateAIResponse();
+    
+    this.isTyping.set(true);
+    
+    try {
+      const aiResponse = await this.resumeAgentService.askQuestion(userQuestion);
+      
+      const botMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: aiResponse,
+        type: 'bot',
+        timestamp: new Date()
+      };
+      
+      this.messages.update(currentMessages => [...currentMessages, botMessage]);
+      
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "Sorry, I'm having trouble responding right now. Please try again.",
+        type: 'system',
+        timestamp: new Date()
+      };
+      
+      this.messages.update(currentMessages => [...currentMessages, errorMessage]);
+    } finally {
+      this.isTyping.set(false);
+    }
   }
 
   onKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.sendMessage();
     }
-  }
-
-  private simulateAIResponse() {
-    // Set typing indicator
-    this.isTyping.set(true);
-    
-    // Get the last message to generate contextual response
-    const lastMessage = this.messages()[this.messages().length - 1];
-    
-    // Simulate thinking time (1-3 seconds)
-    setTimeout(() => {
-      const botMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(), // +1 to ensure unique ID
-        content: this.generateResponse(lastMessage.content),
-        type: 'bot',
-        timestamp: new Date()
-      };
-      
-      this.messages.update(currentMessages => [...currentMessages, botMessage]);
-      this.isTyping.set(false);
-    }, 1500 + Math.random() * 1500); // Random delay 1.5-3 seconds
-  }
-
-  private generateResponse(userQuestion: string): string {
-    const question = userQuestion.toLowerCase();
-    
-    // Simple keyword-based responses
-    if (question.includes('experience') || question.includes('work')) {
-      return "I'm a software engineer with experience in Python, C#, and ASP.NET. I've worked on e-commerce APIs and insurance management systems. Currently learning Angular to expand my frontend skills!";
-    }
-    
-    if (question.includes('skill') || question.includes('technology') || question.includes('tech')) {
-      return "My core technologies include Python, C#, ASP.NET, JavaScript, and I'm actively learning TypeScript and Angular. I also work with databases like PostgreSQL and SQL Server.";
-    }
-    
-    if (question.includes('project')) {
-      return "Some key projects include an e-commerce REST API (Python/Django), an insurance management system (C#/ASP.NET), and this resume chatbot I'm building with Angular!";
-    }
-    
-    if (question.includes('angular') || question.includes('learning')) {
-      return "I'm currently learning Angular as part of a 3-day intensive learning plan. So far I've mastered components, signals, and building chat interfaces like this one!";
-    }
-    
-    // Default response
-    return "That's a great question! Feel free to ask me about my experience, skills, projects, or current learning journey with Angular.";
   }
 }
