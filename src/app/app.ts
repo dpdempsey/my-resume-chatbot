@@ -17,7 +17,7 @@ export class App {
 
   constructor(private http: HttpClient) {
     // Test API call like in the tutorial
-    this.http.get('/api/message')
+    this.http.get('/api/AgentService')
       .subscribe((resp: any) => this.apiMessage.set(resp.text));
   }
 }
