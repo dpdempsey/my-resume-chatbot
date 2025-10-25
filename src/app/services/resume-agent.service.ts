@@ -1,29 +1,28 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { Agent, run, user } from '@openai/agents';
 import type { AgentInputItem } from '@openai/agents';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResumeAgentService {
   private http = inject(HttpClient);
-  private conversationId = signal<string | null>(null);
+  private conversationHistory = signal<AgentInputItem[]>([]);
   private isLoading = signal(false);
 
   async askQuestion(question: string): Promise<string> {
     this.isLoading.set(true);
     try {
       const response = await firstValueFrom(
-        this.http.post<{response: string, conversationId: string}>('/api/agentService', {
-          question,
-          conversationId: this.conversationId()
+        this.http.post<{response: string, history: AgentInputItem[]}>('/api/agentService', {
+          question: question,
+          history: this.conversationHistory()
         })
       );
       
-      this.conversationId.set(response.conversationId);
+      // Update the conversation history with the response from the server
+      this.conversationHistory.set(response.history);
       return response.response;
     } finally {
       this.isLoading.set(false);
