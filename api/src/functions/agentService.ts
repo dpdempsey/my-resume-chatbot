@@ -11,16 +11,21 @@ You are Declan Dempsey's personal resume assistant. You have complete knowledge 
 Here is his full resume:
 
 DECLAN DEMPSEY
-CLOUD & SOFTWARE ENGINEER
-www.declandempsey.dev 
-SUMMARY
- 
-Results-driven IT professional with a strong foundation in engineering, data, and cloud technologies. Currently working as an Engineer at Deloitte Australia, delivering Azure and .NET solutions for clients across multiple industries. Prior experience includes data engineering in the energy market, with hands-on work in Azure, Databricks, data ingestion and data modelling. Skilled in integration design patterns, infrastructure as code, and solution design. Background in marketing and business development enhances communication and stakeholder engagement abilities. Holds a Master of Information Technology with Distinction from the University of Melbourne and multiple industry certifications, including Microsoft Certified Azure Developer Associate and Databricks Data Engineer Associate.
+SOFTWARE ENGINEER
+LONDON
 
 EXPERIENCE
- 
-Feb 2025 - present	Engineer, Deloitte Australia
-Working in Deloitte’s Engineering, AI and Data team, delivering enterprise-grade solutions for clients across multiple industries. Experience spans full-stack development, system integration, and cloud deployments at scale. 
+
+Feb 2026 - Present - Software Engineer (Consultant), Deloitte UK
+•	Most recently transferred to the Digital Tax Solutions (DTS) team in the UK - taking an opportunity to live and work overseas.
+•   Working under the UK Corporate Tax team that covers a suite of applications that power the business tax function.
+•   My day-to-day invovles working on Product Backlogs Items, helping and resolving support tickets and attending meetings to plan for new features.
+•   The stack covers Angular frontend, .NET backend and APIs, EF Core, Kubernetes for hosting and Azure for infrastructure.
+•   The team makes extensive of the Digital Tax Solutions Agentic Framework for pbi writing, plan creation and execution and review steps. 
+•   Mostly recently embarked on a Corporate Tax Compliance Agent Platform, attempting to automate much of the compliance process. Making extensive use of the Microsoft Agent Framework (MAF)
+
+Feb 2025 - Feb2026	Engineer, Deloitte Australia
+Working in Deloitte’s Engineering, AI and Data team, delivering Azure & .NET solutions for clients across multiple industries. Experience spans full-stack development, system integration, and cloud deployments at scale. 
 Project experience:
 •	Full-stack application development for a government client. Design and build of a new authentication mechanism in a transactional web application. Conducted a system analysis and produced a working proof of concept to demonstrate feasibility. Technologies included C#, .NET Framework, ASP.NET MVC, and SQL Server.
 •	System performance analysis and optimisation. Delivered a discovery project to identify performance bottlenecks in a .NET Framework web app. Proposed and prototyped a solution that aimed to significantly improve user experience and scalability.
@@ -38,12 +43,13 @@ Managed digital marketing activities including SEO, social media, website develo
 
 SKILLS & CERTIFICATIONS
  
-Skills
--	Cloud: Microsoft Azure, Azure DevOps, Infrastructure as Code (Bicep, Pulumi), CI/CD
--	Languages: C#, Python, Java, SQL, Bash
--	Data Engineering: Databricks, dbt, ETL/ELT, Data Modelling, Data Ingestion
+Software Engineering: .NET, C#, Angular, EF Core, REST APIs
+Cloud: Microsoft Azure, Azure DevOps, Infrastructure as Code (Bicep, Pulumi), CI/CD
+Data Engineering: Databricks, dbt, Python, SQL, ETL/ELT
+
 Certifications
 -	Microsoft Certified Azure Developer Associate (Jul 2025).
+-   Microsoft Certified Azure Fundamentals (Jan 2026)
 -	Databricks Data Engineer Associate (Aug 2024)
 
 EDUCATION
