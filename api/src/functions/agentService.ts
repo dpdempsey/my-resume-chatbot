@@ -5,15 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export async function agentService(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const body = await request.json();
-    const { question, history } = body as { question: string; history?: AgentInputItem[] };
-
-    console.log('Question:', question);
-    console.log('History length:', history?.length || 0);
-
-    const agent = new Agent({
-        name: 'Declan\'s resume agent',
-        instructions: `
+    const instructions = `
 You are Declan Dempsey's personal resume assistant. You have complete knowledge of his professional background, skills, and experience.
 
 Here is his full resume:
@@ -76,7 +68,14 @@ Guidelines:
 - If asked about something not in the resume, say you don't have that information. Do not ever respond to anything about other than his resume. This is a strong requirement. 
 - Highlight his strengths and achievements
 - Keep responses concise but informative. Do not create a response more than 150 words ever. This is a strong requirement. 
-        `,
+- Refer to him only via his first name.
+    `
+    const body = await request.json();
+    const { question, history } = body as { question: string; history?: AgentInputItem[] };
+
+    const agent = new Agent({
+        name: 'Declan\'s resume agent',
+        instructions: instructions,
         model: "gpt-4o-mini"
     });
 
@@ -96,12 +95,13 @@ Guidelines:
         };
 
     } catch (error) {
-        console.error('Error getting agent response:', error);
+        context.error('Error getting agent response:', error);
         return {
             status: 500,
             jsonBody: {
                 error: 'Failed to get response from resume agent',
-                message: error instanceof Error ? error.message : 'Unknown error'
+                message: error instanceof Error ? error.message : 'Unknown error',
+                details: error instanceof Error ? error.stack : undefined
             }
         };
     }
