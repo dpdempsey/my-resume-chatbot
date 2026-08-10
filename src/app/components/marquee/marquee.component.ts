@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
       </div>
     </div>
   `,
-  //styleUrl: './marquee.component.css'
+  styleUrl: './marquee.component.css'
 })
 export class MarqueeComponent {
   words = ['ENGINEER', 'PROBLEM SOLVER', 'FULL-STACK', 'ANGULAR ENTHUSIAST'];

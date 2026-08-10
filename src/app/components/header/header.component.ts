@@ -10,6 +10,7 @@ import { DecimalPipe } from '@angular/common';
   template: `
     <section class="hero">
       <h1 class="hero__name">{{ name }}</h1>
+      <p class="hero__title">{{ title }}</p>
 
       <div class="stats-grid">
         <div class="card card--pink">
@@ -29,5 +30,6 @@ import { DecimalPipe } from '@angular/common';
 })
 export class HeaderComponent {
   @Input() name = '';
+  @Input() title = '';
   stats = inject(LiveStatsService);
 }

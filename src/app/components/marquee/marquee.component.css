@@ -1,11 +1,39 @@
-.marquee{
-    display: inline-flex;
-    background-color: var(--yellow);
-    overflow: hidden;
-
+.marquee {
+  overflow: hidden;
+  background: var(--yellow);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 0.75rem 0;
+  margin: 1.5rem 0;
 }
 
-.marquee__track{
-    white-space: nowrap;
+.marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  gap: 1.5rem;
+  animation: scroll 15s linear infinite;
+}
 
+.marquee__track span {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.sep {
+  font-size: 1.1rem;
+  opacity: 0.6;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
