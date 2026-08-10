@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #574964;
+  --ink: #9F8383;
+  --card-pink: #EFB6C8;
+  --card-slate: #FFD2A0;
+  --yellow: #f0e94e;
+  --accent: #c2544a;
+}
+body { background: var(--bg); }

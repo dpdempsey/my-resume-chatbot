@@ -1,0 +1,11 @@
+.marquee{
+    display: inline-flex;
+    background-color: var(--yellow);
+    overflow: hidden;
+
+}
+
+.marquee__track{
+    white-space: nowrap;
+
+}
