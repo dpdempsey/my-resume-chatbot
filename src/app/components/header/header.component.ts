@@ -24,7 +24,7 @@ import { StatPillComponent } from '../../shared/stat-pill.component';
         <div class="stat-card stat-card--dark">
           <div class="stat-card__row">
             <span class="stat-card__label">is reading</span>
-            <app-stat-pill [value]="'Not Like Us'" />
+            <app-stat-pill [value]="'just like you'" />
           </div>
         </div>
 
