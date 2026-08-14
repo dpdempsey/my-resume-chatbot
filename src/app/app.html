@@ -3,9 +3,10 @@
     name="Declan Dempsey"
     title="a tech dude from Australia"
   />
-  <app-marquee />
 
   <main>
+    <app-marquee />
+
     <div class="chat-wrapper">
       <app-chat />
     </div>
@@ -15,20 +16,23 @@
 
 <style>
 .app-container {
-  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0 1rem 2rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg);
+  background: transparent;
   min-height: 100vh;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .chat-wrapper {
-  background: var(--bg);
+  background: transparent;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  margin-top: -8px; /* Slight overlap to connect with header */
 }
 
 .api-message {

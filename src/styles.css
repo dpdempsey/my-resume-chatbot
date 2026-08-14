@@ -1,10 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --bg: #574964;
-  --ink: #9F8383;
-  --card-pink: #EFB6C8;
-  --card-slate: #FFD2A0;
-  --yellow: #f0e94e;
-  --accent: #c2544a;
+  --bg: #d9ead9;
+  --bg-deep: #4f6d5c;
+  --ink: #1f2d29;
+  --ink-soft: #415754;
+  --panel: #f5f3ee;
+  --panel-alt: #e9efe5;
+  --panel-gold: #f0dd9d;
+  --card-rose: #e8d5d6;
+  --card-slate: #dfeae4;
+  --card-peach: #f6e5c7;
+  --yellow: #f2e97b;
+  --accent: #cf6a55;
+  --shadow: rgba(31, 45, 41, 0.14);
 }
-body { background: var(--bg); }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #edf5ec 0%, var(--bg) 42%, #bfd4bf 100%);
+  min-height: 100vh;
+}
