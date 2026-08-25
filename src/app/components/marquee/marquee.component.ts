@@ -6,12 +6,16 @@ import { Component } from '@angular/core';
   template: `
     <div class="marquee">
       <div class="marquee__track">
-        @for (word of words; track $index) {
-          <span>{{ word }}</span><span class="sep">✳</span>
-        }
-        @for (word of words; track $index) {
-          <span aria-hidden="true">{{ word }}</span><span class="sep" aria-hidden="true">✳</span>
-        }
+        <div class="marquee__group">
+          @for (word of words; track $index) {
+            <span>{{ word }}</span><span class="sep">✳</span>
+          }
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          @for (word of words; track $index) {
+            <span>{{ word }}</span><span class="sep">✳</span>
+          }
+        </div>
       </div>
     </div>
   `,

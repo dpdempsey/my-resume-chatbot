@@ -23,7 +23,7 @@ import { StatPillComponent } from '../../shared/stat-pill.component';
 
         <div class="stat-card stat-card--dark">
           <div class="stat-card__row">
-            <span class="stat-card__label">is reading</span>
+            <span class="stat-card__label">is now reading</span>
             <app-stat-pill [value]="'Just like you'" />
           </div>
         </div>

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'app-stat-pill',
     standalone: true,
-    template: `<span class="pill">{{ value }}<span class="dot"></span></span>`,
+    template: `<span class="pill">{{ value }}</span>`,
     styles: `
     .pill {
       display: inline-flex;
