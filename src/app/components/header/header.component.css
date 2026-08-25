@@ -1,5 +1,6 @@
 .hero {
   display: grid;
+  flex: 1;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.9fr);
   align-items: center;
   gap: 2.5rem;

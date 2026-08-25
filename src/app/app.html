@@ -1,12 +1,14 @@
 <div class="app-container">
-  <app-header
-    name="Declan Dempsey"
-    title="a tech dude from Australia"
-  />
+  <section class="intro">
+    <app-header
+      name="Declan Dempsey"
+      title="a tech dude from Australia"
+    />
+
+    <app-marquee />
+  </section>
 
   <main>
-    <app-marquee />
-
     <div class="chat-wrapper">
       <app-chat />
     </div>
@@ -16,10 +18,25 @@
 
 <style>
 .app-container {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: transparent;
   min-height: 100vh;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  margin-bottom: 2rem;
+}
+
+.intro app-header {
+  display: flex;
+  flex: 1;
+  min-height: 0;
 }
 
 main {
