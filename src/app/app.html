@@ -48,6 +48,21 @@ main {
 .chat-wrapper {
   background: transparent;
 }
+
+@media (max-width: 560px) {
+  .intro {
+    min-height: auto;
+    margin-bottom: 0;
+  }
+
+  .intro app-header {
+    flex: none;
+  }
+
+  main {
+    margin-top: 2rem;
+  }
+}
 </style>
 
 <router-outlet />

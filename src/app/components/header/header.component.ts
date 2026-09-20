@@ -1,11 +1,11 @@
 import { Component, inject, Input } from '@angular/core';
 import { LiveStatsService } from '../../services/live-stats.service';
-import { StatPillComponent } from '../../shared/stat-pill.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [StatPillComponent],
+  imports: [NgOptimizedImage],
   template: `
     <section class="hero">
       <div class="hero__copy">
@@ -13,28 +13,28 @@ import { StatPillComponent } from '../../shared/stat-pill.component';
         <p class="hero__title">{{ title }}</p>
       </div>
 
-      <div class="hero__stats" aria-label="key statistics">
-        <div class="stat-card stat-card--light">
-          <div class="stat-card__row">
-            <span class="stat-card__label">is currently in</span>
-            <app-stat-pill [value]="'London 🇬🇧'" />
-          </div>
+      <div class="hero__visual">
+        <div class="hero__wrapper">
+          <img class="hero__picture" ngSrc="/me.jpg" width="719" height="719" priority alt="Declan Dempsey">
         </div>
 
-        <div class="stat-card stat-card--dark">
-          <div class="stat-card__row">
-            <span class="stat-card__label">is now reading</span>
-            <app-stat-pill [value]="'Just like you'" />
+        <!-- <div class="hero__stats" aria-label="key statistics">
+          <div class="stats-panel">
+            <div class="stats-panel__row">
+              <span class="stats-panel__label">currently in</span>
+              <strong>London 🇬🇧</strong>
+            </div>
+            <div class="stats-panel__row stats-panel__row--reading">
+              <span class="stats-panel__label">currently reading</span>
+              <strong>Just like you</strong>
+            </div>
+            <div class="stats-panel__row">
+              <span class="stats-panel__label">coding clock</span>
+              <strong>{{ stats.codingSeconds() }} seconds</strong>
+            </div>
           </div>
-        </div>
-
-        <div class="stat-card stat-card--blue">
-          <div class="stat-card__row stat-card__row--wrap">
-            <span class="stat-card__label">last commit made</span>
-            <app-stat-pill [value]="stats.codingSeconds()"/>
-            <span class="stat-card__label">seconds ago</span>
-          </div>
-        </div>
+        </div> -->
+        
       </div>
     </section>
   `,

@@ -13,6 +13,7 @@
   align-items: center;
   width: max-content;
   white-space: nowrap;
+  will-change: transform;
   animation: scroll 18s linear infinite;
 }
 
@@ -21,6 +22,7 @@
   flex-shrink: 0;
   align-items: center;
   gap: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .marquee__track span {
