@@ -55,6 +55,19 @@
   justify-content: center;
   border: 8px solid var(--ink);
   border-radius: 50%;
+  transition: transform 180ms ease;
+}
+
+@media (hover: hover) {
+  .hero__wrapper:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__wrapper {
+    transition: none;
+  }
 }
 
 .hero__picture {
