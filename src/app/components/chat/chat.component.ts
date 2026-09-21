@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, computed, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent, ChatMessage } from '../message/message.component';
 import { ResumeAgentService } from '../../services/resume-agent.service';
@@ -28,19 +28,27 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
             </div>
           </div>
         }
+        @if (questionLimitReached()) {
+          <p class="question-limit" role="status">
+            Please don't use all my credits! Thanks for stopping by.
+          </p>
+        }
       </div>
 
       <div class="input-container">
         <input 
           type="text" 
+          #messageInput
           [(ngModel)]="currentMessage"
           (keypress)="onKeyPress($event)"
           placeholder="Type your message..."
           class="message-input"
+          [disabled]="questionLimitReached() || isTyping()"
         />
         <button 
           (click)="sendMessage()"
           class="send-button"
+          [disabled]="questionLimitReached() || isTyping() || !currentMessage.trim()"
         >
           Send
         </button>
@@ -50,11 +58,17 @@ import { ResumeAgentService } from '../../services/resume-agent.service';
   styleUrl: './chat.component.css'
 })
 export class ChatComponent implements AfterViewChecked {
+  private readonly maxQuestions = 5;
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef<HTMLInputElement>;
   
   messages = signal<ChatMessage[]>([]);
   currentMessage = '';
   isTyping = signal(false);
+  questionLimitReached = computed(() => this.userQuestionCount() >= this.maxQuestions);
+  private userQuestionCount = computed(
+    () => this.messages().filter(message => message.type === 'user').length
+  );
   private shouldScrollToBottom = false;
 
   constructor(private resumeAgentService: ResumeAgentService) {}
@@ -76,7 +90,7 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   async sendMessage() {
-    if (!this.currentMessage.trim()) {
+    if (!this.currentMessage.trim() || this.questionLimitReached() || this.isTyping()) {
       return; 
     }
     
@@ -124,11 +138,20 @@ export class ChatComponent implements AfterViewChecked {
       this.shouldScrollToBottom = true;
     } finally {
       this.isTyping.set(false);
+      this.focusMessageInput();
     }
   }
 
+  private focusMessageInput(): void {
+    if (this.questionLimitReached()) {
+      return;
+    }
+
+    setTimeout(() => this.messageInput?.nativeElement.focus());
+  }
+
   onKeyPress(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !this.questionLimitReached() && !this.isTyping()) {
       this.sendMessage();
     }
   }
