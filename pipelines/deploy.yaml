@@ -20,5 +20,5 @@ steps:
   inputs:
     app_location: '.'
     output_location: 'dist/my-resume-chatbot/browser'
-    api_location: 'api/src'
+    api_location: 'api'
     azure_static_web_apps_api_token: $(deployment_token)
