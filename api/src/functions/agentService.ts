@@ -82,7 +82,7 @@ Guidelines:
     const agent = new Agent({
         name: 'Declan\'s resume agent',
         instructions: instructions,
-        model: "gpt-4o-mini"
+        model: "gpt-5-nano"
     });
 
     try {
