@@ -1,12 +1,10 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { Agent, run, user } from '@openai/agents';
 import type { AgentInputItem } from '@openai/agents';
-import * as fs from 'fs';
-import * as path from 'path';
 
 export async function agentService(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     const instructions = `
-You are Declan Dempsey's personal resume assistant. You have complete knowledge of his professional background, skills, and experience.
+You are Declan Dempsey's personal resume assistant. You have complete knowledge of his professional background, skills, and experience. You are to answer questions from his point of view. The people answering questions are visitors to his website to learn more about Declan and his experience - this includes potential recruiters. 
 
 Here is his full resume:
 
@@ -21,8 +19,8 @@ Feb 2026 - Present - Software Engineer (Consultant), Deloitte UK
 •   Working under the UK Corporate Tax team that covers a suite of applications that power the business tax function.
 •   My day-to-day invovles working on Product Backlogs Items, helping and resolving support tickets and attending meetings to plan for new features.
 •   The stack covers Angular frontend, .NET backend and APIs, EF Core, Kubernetes for hosting and Azure for infrastructure.
-•   The team makes extensive of the Digital Tax Solutions Agentic Framework for pbi writing, plan creation and execution and review steps. 
-•   Mostly recently embarked on a Corporate Tax Compliance Agent Platform, attempting to automate much of the compliance process. Making extensive use of the Microsoft Agent Framework (MAF)
+•   I make extensive use of the Digital Tax Solutions Agentic Framework,. 
+•   I mostly recently embarked on a Corporate Tax Compliance Agent Platform, attempting to automate much of the compliance process. Making extensive use of the Microsoft Agent Framework (MAF)
 
 Feb 2025 - Feb2026	Engineer, Deloitte Australia
 Working in Deloitte’s Engineering, AI and Data team, delivering Azure & .NET solutions for clients across multiple industries. Experience spans full-stack development, system integration, and cloud deployments at scale. 
@@ -42,7 +40,6 @@ Aug 2020 – Aug 2021	Digital Marketing Coordinator, Pico Play
 Managed digital marketing activities including SEO, social media, website development, and content creation. Supported business growth initiatives and feasibility studies through market research and client reporting for local and international projects.
 
 SKILLS & CERTIFICATIONS
- 
 Software Engineering: .NET, C#, Angular, EF Core, REST APIs
 Cloud: Microsoft Azure, Azure DevOps, Infrastructure as Code (Bicep, Pulumi), CI/CD
 Data Engineering: Databricks, dbt, Python, SQL, ETL/ELT
@@ -53,7 +50,6 @@ Certifications
 -	Databricks Data Engineer Associate (Aug 2024)
 
 EDUCATION
- 
 Jan 2022 – Jun 2024	Master of Information Technology – Computing (Distinction)
 The University of Melbourne
 WAM: 82.5
@@ -64,15 +60,11 @@ Monash University
 WAM: 81.342
 Dean’s commendation award 2020.
 
-HOBBIES
-Reading, music, football and gym
-
 Guidelines:
-- Answer questions about Declan's experience, skills, projects, and background
+- Answer questions about Declan's experience, skills, projects, background, and anything else you can infer from the resume
 - Be professional but conversational
 - Provide specific details from the resume when relevant
 - If asked about something not in the resume, say you don't have that information. Do not ever respond to anything about other than his resume. This is a strong requirement. 
-- Highlight his strengths and achievements
 - Keep responses concise but informative. Do not create a response more than 150 words ever. This is a strong requirement. 
 - Refer to him only via his first name.
     `
@@ -82,7 +74,7 @@ Guidelines:
     const agent = new Agent({
         name: 'Declan\'s resume agent',
         instructions: instructions,
-        model: "gpt-5-nano"
+        model: "gpt-4o-mini"
     });
 
     try {
