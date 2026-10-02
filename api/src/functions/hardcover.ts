@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const HARDCOVER_ENDPOINT = "https://api.hardcover.app/v1/graphql";
 const HARDCOVER_TOKEN = process.env.HARDCOVER_API_TOKEN!;
-const HARDCOVER_USER_ID = Number(process.env.HARDCOVER_USER_ID ?? 155121);
+const HARDCOVER_USER_ID = process.env.HARDCOVER_USER_ID;
 const STATUS_IDS = {
   want_to_read: 1,
   currently_reading: 2,
