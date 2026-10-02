@@ -2,7 +2,7 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 import { Agent, run, user, tool } from '@openai/agents';
 import type { AgentInputItem } from '@openai/agents';
 import { instructions } from "../tools/instructions";
-import { getMyBooksTool } from "./hardcover";
+import { getMyBooksTool } from "../tools/hardcover";
 import { z } from 'zod';
 
 export async function agentService(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
