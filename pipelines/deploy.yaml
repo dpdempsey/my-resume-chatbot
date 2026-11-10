@@ -34,7 +34,7 @@ stages:
   jobs:
   - job: 'Deploy'
     displayName: "Deploy to Production env"
-    environment: prod
+    environnment: prod
     steps:
     - task: AzureStaticWebApp@0
       inputs:
