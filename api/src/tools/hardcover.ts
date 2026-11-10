@@ -76,8 +76,8 @@ async function hardcoverRequest<T>(
 export const getMyBooksTool = tool({
   name: "get_my_books",
   description:
-    "List books from the user's Hardcover library filtered by reading status. " +
-    "Returns title, cover image URL and authors for each book.",
+    "List books that the user is currently reading in their personal lives fro the Hardcover api " +
+    "Returns one book per line in the format \"title\" by \"author\".",
   parameters: z.object({
     status: z
       .enum(["want_to_read", "currently_reading", "read", "paused", "did_not_finish"])
@@ -96,16 +96,18 @@ export const getMyBooksTool = tool({
       return `No books found on the "${status}" shelf.`;
     }
 
-    return data.user_books.map(({ book }) => ({
-      title: book.title,
-      cover: book.image?.url ?? null,
-      authors: [
-        ...new Set(
-          book.contributions
-            .map((c) => c.author?.name)
-            .filter((n): n is string => Boolean(n))
-        ),
-      ],
-    }));
+    return data.user_books
+      .map(({ book }) => {
+        const authors = [
+          ...new Set(
+            book.contributions
+              .map((c) => c.author?.name)
+              .filter((n): n is string => Boolean(n))
+          ),
+        ];
+
+        return `"${book.title}" by "${authors.length ? authors.join(", ") : "Unknown author"}"`;
+      })
+      .join("\n");
   },
 });
