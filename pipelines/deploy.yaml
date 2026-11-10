@@ -14,11 +14,31 @@ variables:
 pool:
   vmImage: $(vmImageName)
 
-steps:
-- task: AzureStaticWebApp@0
-  displayName: 'Deploy WebApp'
-  inputs:
-    app_location: '.'
-    output_location: 'dist/my-resume-chatbot/browser'
-    api_location: 'api'
-    azure_static_web_apps_api_token: $(deployment_token)
+stages:
+- stage: Preview
+  displayName: "Staging"
+  jobs:
+  - job: 'Deploy'
+    displayName: "Deploy to Preview env"
+    steps:
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '.'
+        output_location: 'dist/my-resume-chatbot/browser'
+        api_location: 'api'
+        azure_static_web_apps_api_token: $(deployment_token)
+        deployment_environment: 'preview'
+
+- stage: Production
+  displayName: "Production"
+  jobs:
+  - job: 'Deploy'
+    displayName: "Deploy to Production env"
+    environment: prod
+    steps:
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '.'
+        output_location: 'dist/my-resume-chatbot/browser'
+        api_location: 'api'
+        azure_static_web_apps_api_token: $(deployment_token)
