@@ -32,13 +32,16 @@ stages:
 - stage: Production
   displayName: "Production"
   jobs:
-  - job: 'Deploy'
+  - deployment: Deploy
     displayName: "Deploy to Production env"
-    environnment: prod
-    steps:
-    - task: AzureStaticWebApp@0
-      inputs:
-        app_location: '.'
-        output_location: 'dist/my-resume-chatbot/browser'
-        api_location: 'api'
-        azure_static_web_apps_api_token: $(deployment_token)
+    environment: prod
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureStaticWebApp@0
+            inputs:
+              app_location: '.'
+              output_location: 'dist/my-resume-chatbot/browser'
+              api_location: 'api'
+              azure_static_web_apps_api_token: $(deployment_token)
